@@ -1,0 +1,5 @@
+bazel-out
+bazel-robot-madtown-2015
+bazel-bin
+bazel-genfiles
+bazel-testlogs
