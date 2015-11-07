@@ -28,7 +28,21 @@ ClawPlant::~ClawPlant() {
 
 }
 
+void ClawPlant::set_angle(Angle theta) {
+  _state(0) = theta.to(rad);
+}
+
+void ClawPlant::set_velocity(AngularVelocity omega) {
+  _state(1) = omega.to(rad/s);
+}
+
 void ClawPlant::update(Time dt, Voltage voltage) {
+  // If x is the current state,
+  // x_dot is the time derivative of the state,
+  // A is a matrix representing the defining differential equation of the unforced system,
+  // u is the input given from the controller (in this case voltage),
+  // and B a matrix showing how the input affects the system
+  // x_dot = A*x + B*u
   _state += (_dynamics * _state + voltage.to(V) * _control) * dt.to(s);
   _state(0) = rangeify(min.to(rad), _state(0), max.to(rad));
 }

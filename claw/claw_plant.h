@@ -9,6 +9,8 @@ public:
   ClawPlant();
   ClawPlant(Angle initial_position, AngularVelocity initial_velocity);
   ~ClawPlant();
+  void set_angle(Angle theta);
+  void set_velocity(AngularVelocity omega);
   void update(Time dt, Voltage voltage);
   Angle angle();
   AngularVelocity angular_velocity();
