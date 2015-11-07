@@ -1,4 +1,6 @@
 cc_library(
     name = "eigen",
-    hdrs = glob(["include/**/*])
+    srcs = glob(["include/src/**/*.h"]),
+    hdrs = glob(["include/**/*"]),
+    visibility = ["//visibility:public"],
 )

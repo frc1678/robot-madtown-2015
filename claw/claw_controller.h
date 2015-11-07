@@ -1,9 +1,23 @@
-#ifndef CLAW_CONTROLLER_H
-#define CLAW_CONTROLLER_H
+#include "claw_plant.h"
+#include "unitscpp/unitscpp.h"
 
 class ClawController {
+ enum State { INITIALIZING = 0, CALIBRATING = 1, RUNNING = 2, ESTOP = 3 };
 public:
-    double Update(double dt, double claw_position, double claw_velocity);
-};
+  ClawController();
+  Voltage update(Angle encoder, bool min_hall, bool max_hall, bool enabled);
+  bool running();
+  void set_goal(Angle goal);
+private:
+  Angle _goal;
+  Angle _offset;
+  Angle _error_last;
 
-#endif
+  Time dt = .005*s;
+
+  // Unit of V/rad and Vs/rad, respectively
+  Units<2,-3,1,-1> k_proportional = 45*V/rad;
+  Units<2,-2,1,-1> k_derivative = 0.001*V*s/rad;
+
+  State _state;
+};

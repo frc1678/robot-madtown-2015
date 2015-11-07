@@ -1,20 +1,26 @@
 #ifndef CLAW_PLANT_H
 #define CLAW_PLANT_H
 
+#include "eigen/include/Core"
+#include "unitscpp/unitscpp.h"
+
 class ClawPlant {
-private:
-    double theta = 0.0;
-    double omega = 0.0;
-    static constexpr double kF = -31.857;
-    static constexpr double kM = 6.747;
-    static constexpr double min = 0.0;
-    static constexpr double max = 2.1;
 public:
-    void Update(double dt, double voltage);
-    double GetAngle();
-    bool IsMaxHallTriggered();
-    bool IsMinHallTriggered();
-    double GetAngularVelocity();
+  ClawPlant();
+  ClawPlant(Angle initial_position, AngularVelocity initial_velocity);
+  ~ClawPlant();
+  void update(Time dt, Voltage voltage);
+  Angle angle();
+  AngularVelocity angular_velocity();
+  Angle encoder();
+  bool max_hall_triggered();
+  bool min_hall_triggered();
+
+private:
+  Angle _offset;
+  Eigen::Vector2d _state;
+  Eigen::Matrix<double, 2, 2> _dynamics;
+  Eigen::Matrix<double, 2, 1> _control;
 };
 
 #endif

@@ -3,5 +3,5 @@ cc_test(
     srcs = ["claw_test.cpp"],
     copts = ["-Iexternal/gtest"],
     size = "small",
-    deps = ["@gtest//:main", "//claw:claw"],
+    deps = ["//third_party/googletest:googletest", "//claw:claw"],
 )
