@@ -4,8 +4,8 @@
 
 class DriveController {
   Length goal_distance;
-  Units<1,-3,1,-1> kP = 5*V/m;
-  Units<1,-2,1,-1> kD = .1*V*s/m;
+  Units<1,-3,1,-1> kP = 3*V/m;
+  Units<1,-2,1,-1> kD = 1*V*s/m;
   Length last_error;
 public:
   DriveController();

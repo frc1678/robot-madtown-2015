@@ -19,6 +19,7 @@ DrivePlant::DrivePlant() {
 		0.0, 0.0,
 		kM, 0.0,
 		0.0, kM;
+  _state << 0, 0, 0, 0;
 }
 
 DrivePlant::~DrivePlant() {
@@ -34,6 +35,10 @@ void DrivePlant::update(Time dt, Voltage voltage_left, Voltage voltage_right) {
 
 Angle DrivePlant::angle() {
   return 2*(distance_right() - distance_left()) / drive_width;
+}
+
+Length DrivePlant::distance() {
+  return (distance_right() + distance_left()) / 2;
 }
 
 Length DrivePlant::distance_right() {

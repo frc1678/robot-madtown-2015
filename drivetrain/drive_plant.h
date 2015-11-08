@@ -11,6 +11,7 @@ public:
   void update(Time dt, Voltage left_voltage, Voltage right_voltage);
   Angle angle();
   AngularVelocity angular_velocity();
+  Length distance();
   Length distance_right();
   Length distance_left();
   Velocity velocity_left();
