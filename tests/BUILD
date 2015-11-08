@@ -5,3 +5,11 @@ cc_test(
     size = "small",
     deps = ["//third_party/googletest:googletest", "//claw:claw"],
 )
+
+cc_test(
+    name = "drive_test",
+    srcs = ["drive_test.cpp"],
+    copts = ["-Iexternal/gtest"],
+    size = "small",
+    deps = ["//third_party/googletest:googletest", "//drivetrain:drive"],
+)
