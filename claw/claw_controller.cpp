@@ -51,3 +51,13 @@ bool ClawController::running() {
 void ClawController::set_goal(Angle goal) {
   _goal = goal;
 }
+
+void ClawController::run_intake(Voltage speed){//TODO (Finn) check to see if this direction sends the motors forwards or backwards
+    
+
+}
+
+void ClawController::spit_intake(Voltage speed){//TODO (Finn) Invert speed of other thingy 
+
+
+}

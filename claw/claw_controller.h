@@ -9,6 +9,8 @@ public:
   bool running();
   void set_goal(Angle goal);
 private:
+  void run_intake(Voltage speed);
+  void spit_intake(Voltage speed); 
   Angle _goal;
   Angle _offset;
   Angle _error_last;
