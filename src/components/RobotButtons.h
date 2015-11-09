@@ -13,13 +13,10 @@
 
 class RobotButtons {
 public:
-
-
-
-
-
 	RobotButtons(Joystick *l, Joystick *r, Joystick *m);
 	~RobotButtons();
+
+	CitrusButton *clawToggle;
 
 	void UpdateButtons();
 };

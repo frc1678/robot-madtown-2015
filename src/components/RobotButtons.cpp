@@ -9,19 +9,19 @@
 
 RobotButtons::RobotButtons(Joystick *l, Joystick *r, Joystick *m) {
 
-
+	clawToggle = new CitrusButton(m, 1);
 
 }
 
 RobotButtons::~RobotButtons() {
 
-
+	delete clawToggle;
 
 }
 
 
 void RobotButtons::UpdateButtons() {
 
-
+	clawToggle->Update();
 
 }

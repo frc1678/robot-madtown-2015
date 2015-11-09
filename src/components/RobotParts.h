@@ -10,19 +10,20 @@
 
 #include "WPILib.h"
 
-using namespace std;
-
 class RobotParts {
 public:
-
 	// Compressor
 	Compressor *compressor;
 
-
+	VictorSP* moveClawA, *moveClawB;
+	Solenoid* openClaw;
+	VictorSP* tuskA, *tuskB;
+	VictorSP* clawRollers;
 
 	// Encoders
 	Encoder *leftEncoder;
 	Encoder *rightEncoder;
+	Encoder *clawEncoder;
 
 	// Drive train and its motors
 

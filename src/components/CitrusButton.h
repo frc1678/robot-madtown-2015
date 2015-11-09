@@ -13,10 +13,14 @@ class CitrusButton
 	//Optional.
 	Joystick *stick;
 	int button;
+
+	bool axis;
+	bool neg;
+
 public:
 	
 	CitrusButton(Joystick *tstick, int tbutton);
-	
+	CitrusButton(Joystick *tstick, int tbutton, bool taxis, bool tneg);
 	~CitrusButton();
 
 

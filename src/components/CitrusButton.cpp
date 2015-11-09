@@ -1,9 +1,20 @@
 #include "CitrusButton.h"
 
-
+	// For buttons like X or Y pass in false for "axis", otherwise like the triggers on an xbox controller pass in true for "axis"
+	CitrusButton::CitrusButton(Joystick *tstick, int tbutton, bool taxis, bool tneg)
+	{
+		axis = taxis;
+		neg = tneg;
+		output = false;
+		oldInput = false;
+		stick = tstick;
+		button = tbutton;
+	}
 
 	CitrusButton::CitrusButton(Joystick *tstick, int tbutton)
 	{
+		axis = false;
+		neg = false;
 		output = false;
 		oldInput = false;
 		stick = tstick;
@@ -25,7 +36,12 @@
 	}
 	void CitrusButton::Update()
 	{
-		Update(stick->GetRawButton(button));//Update(stick->GetRawButton(button));
+		if (!axis) {
+			Update(stick->GetRawButton(button));//Update(stick->GetRawButton(button));
+		}
+		else if (axis) {
+			Update(stick->GetRawAxis(button));
+		}
 	}
 	bool CitrusButton::ButtonClicked(bool input) const
 	{
@@ -42,7 +58,15 @@
 	//Return true if the button state changes from false to true. (not clicked to clicked)
 		if (button > 0)
 		{
-			return ButtonClicked(stick->GetRawButton(button));
+			if(!axis) {
+				return ButtonClicked(stick->GetRawButton(button));
+			}
+			else if (axis && neg) {
+				return ButtonClicked(stick->GetRawAxis(button) < -0.5);
+			}
+			else if (axis && !neg) {
+				return ButtonClicked(stick->GetRawAxis(button) > 0.5);
+			}
 		}
 		return false;
 	}
@@ -61,7 +85,15 @@
 	//Return true if the button state changes from true to false. (clicked to not clicked)
 		if (button > 0)
 		{
-			return ButtonReleased(stick->GetRawButton(button));
+			if(!axis) {
+				return ButtonReleased(stick->GetRawButton(button));
+			}
+			else if (axis && neg) {
+				return ButtonReleased(stick->GetRawAxis(button) < -0.5);
+			}
+			else if (axis && !neg) {
+				return ButtonReleased(stick->GetRawAxis(button) > 0.5);
+			}
 		}
 		return false;
 	}
@@ -73,7 +105,15 @@
 	{
 		if (button > 0)
 		{
-			return ButtonPressed(stick->GetRawButton(button));
+			if(!axis) {
+				return ButtonPressed(stick->GetRawButton(button));
+			}
+			else if (axis && neg) {
+				return ButtonPressed(stick->GetRawAxis(button) < -0.5);
+			}
+			else if (axis && !neg) {
+				return ButtonPressed(stick->GetRawAxis(button) > 0.5);
+			}
 		}
 		return false;
 	}
