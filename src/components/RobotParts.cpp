@@ -18,6 +18,7 @@ RobotParts::RobotParts() {
 	openClaw = new Solenoid(5);
 	moveClawA = new VictorSP(5);
 	moveClawB = new VictorSP(4);
+	minHall = new DigitalInput(0);
 
 	// Encoders
 	leftEncoder = new Encoder(12, 13);

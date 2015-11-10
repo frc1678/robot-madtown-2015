@@ -19,6 +19,7 @@ public:
 	Solenoid* openClaw;
 	VictorSP* tuskA, *tuskB;
 	VictorSP* clawRollers;
+	DigitalInput* minHall;
 
 	// Encoders
 	Encoder *leftEncoder;

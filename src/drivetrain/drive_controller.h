@@ -11,6 +11,7 @@ public:
   DriveController();
   ~DriveController();
   Voltage update(Length left_encoder, Length right_encoder);
+  bool done();
   void set_distance_goal(Length distance);
 };
 #endif

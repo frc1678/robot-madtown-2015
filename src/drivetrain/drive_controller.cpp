@@ -8,7 +8,6 @@ DriveController::~DriveController() {
 }
 
 Voltage DriveController::update(Length left_encoder, Length right_encoder){
-  std::cout << left_encoder << right_encoder << std::endl;
   Length error = goal_distance - (left_encoder + right_encoder)/2;
   Time dT = 0.005*s;
   auto d_error = (error-last_error)/dT;
@@ -20,3 +19,6 @@ void DriveController::set_distance_goal(Length distance) {
   goal_distance = distance;
 }
 
+bool DriveController::done() {
+	return (-.1*ft < last_error && last_error < .1*ft);
+}
