@@ -30,6 +30,8 @@ RobotParts::RobotParts() {
 
 	drivetrain = new RobotDrive(leftDT, rightDT);
 	drivetrain->SetSafetyEnabled(false);
+
+	shifting = new DoubleSolenoid(1, 2);
 }
 
 RobotParts::~RobotParts() {

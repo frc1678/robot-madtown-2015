@@ -32,7 +32,7 @@ public:
 	VictorSP *rightDT;
 
 	RobotDrive *drivetrain;
-
+	DoubleSolenoid *shifting;
 
 	RobotParts();
 	~RobotParts();

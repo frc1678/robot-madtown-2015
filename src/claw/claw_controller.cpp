@@ -44,7 +44,7 @@ Voltage ClawController::update(Angle encoder_angle, bool min_hall, bool max_hall
     break;
   }
   SmartDashboard::PutNumber("Claw Voltage", voltage.to(V));
-  return rangeify(-8.0*V, voltage, 8.0*V);
+  return rangeify(-12.0*V, voltage, 12.0*V);
 }
 
 bool ClawController::running() {

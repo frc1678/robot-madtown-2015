@@ -30,9 +30,9 @@ void ClawSubsystem::update() {
 	Voltage claw_voltage = _controller.update(
 			parts->clawEncoder->Get() / 11.8 * deg, !parts->minHall->Get(),
 			false, true);
-	parts->clawRollers->Set(-_intake_speed.to(pwm));
-	parts->tuskA->Set(_intake_speed.to(pwm));
-	parts->tuskB->Set(-_intake_speed.to(pwm));
+	parts->clawRollers->Set(_intake_speed.to(pwm));
+	parts->tuskA->Set(-_intake_speed.to(pwm));
+	parts->tuskB->Set(_intake_speed.to(pwm));
 	parts->moveClawA->Set(-claw_voltage.to(pwm));
 	parts->moveClawB->Set(-claw_voltage.to(pwm));
 }

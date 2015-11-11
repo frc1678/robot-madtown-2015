@@ -16,7 +16,15 @@ public:
 	RobotButtons(Joystick *l, Joystick *r, Joystick *m);
 	~RobotButtons();
 
-	CitrusButton *clawToggle;
+	CitrusButton* pickup;
+	CitrusButton* hp_front;
+	CitrusButton* hp_reverse;
+	CitrusButton* kiss_pass;
+
+	CitrusButton* open_claw;
+
+	CitrusButton* shift_high;
+	CitrusButton* shift_low;
 
 	void UpdateButtons();
 };

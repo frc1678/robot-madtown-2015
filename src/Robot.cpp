@@ -14,11 +14,11 @@ class Robot: public IterativeRobot {
 	bool open;
 
 private:
-
 	void RobotInit() {
 		right = new Joystick(0);
 		left = new Joystick(1);
 		manipulator = new Joystick(2);
+
 		buttons = new RobotButtons(left, right, manipulator);
 		parts = new RobotParts();
 		_claw = ClawSubsystem(parts);
@@ -30,24 +30,28 @@ private:
 	}
 
 	void AutonomousInit() {
+		_auto_state = 0;
 		_claw.set_goal(_claw.ground_pickup);
+		drive_control.set_distance_goal(13*ft);
 	}
 
 	void AutonomousPeriodic() {
 		_claw.update();
 		Voltage u;
+		SmartDashboard::PutNumber("state", _auto_state);
+		parts->shifting->Set(DoubleSolenoid::Value::kForward);
+		Voltage u_left, u_right;
 		switch(_auto_state) {
 		case 0:
-			drive_control.set_distance_goal(16*ft);
-			u = drive_control.update(parts->leftEncoder->Get()*click, -parts->rightEncoder->Get()*click);
-			parts->drivetrain->TankDrive(-u.to(pwm), -u.to(pwm), false);
+			std::tie(u_left, u_right) = drive_control.update(parts->leftEncoder->Get()*click, -parts->rightEncoder->Get()*click);
+			parts->drivetrain->TankDrive(-u_left.to(pwm), -u_right.to(pwm), false);
 			if (drive_control.done()) {
 				_auto_state = 1;
 			}
 			break;
 		case 1:
 			parts->drivetrain->TankDrive(0.0, 0.0);
-			_claw.run_intakes(-1);
+			_claw.run_intakes(1*pwm);
 			break;
 		case 2:
 			_claw.run_intakes(0);
@@ -56,22 +60,41 @@ private:
 	}
 
 	void TeleopInit() {
-		_claw.set_goal(2.5 * rad);
+		_claw.set_goal(0 * rad);
 	}
 
 	void TeleopPeriodic() {
+		buttons->UpdateButtons();
 		SmartDashboard::PutNumber("Claw Angle", _claw.angle().to(rad));
-		if (manipulator->GetRawButton(1)) {
+		if (buttons->hp_front->ButtonPressed()) {
 			_claw.set_goal(_claw.human_pickup_forward);
 		}
-		if (manipulator->GetRawButton(2)) {
+		if (buttons->hp_reverse->ButtonPressed()) {
 			_claw.set_goal(_claw.human_pickup_reverse);
 		}
-		if (manipulator->GetRawButton(3)) {
+		if (buttons->pickup->ButtonPressed()) {
 			_claw.set_goal(_claw.ground_pickup);
 		}
-		_claw.run_intakes(manipulator->GetRawAxis(2) - manipulator->GetRawAxis(3));
+		if (buttons->kiss_pass->ButtonPressed()) {
+			_claw.set_goal(.3*rad);
+		}
+		if (buttons->open_claw->ButtonPressed()) {
+			_claw.open();
+		}
+		else {
+			_claw.close();
+		}
+
+		if (buttons->shift_low->ButtonPressed()) {
+			parts->shifting->Set(DoubleSolenoid::Value::kForward);
+		}
+		else if (buttons->shift_high->ButtonPressed()) {
+			parts->shifting->Set(DoubleSolenoid::Value::kReverse);
+		}
+		_claw.run_intakes((manipulator->GetRawAxis(2) - manipulator->GetRawAxis(3)) * pwm);
 		_claw.update();
+
+		parts->drivetrain->TankDrive(left->GetY(), right->GetY());
 	}
 
 	void TestPeriodic() {
