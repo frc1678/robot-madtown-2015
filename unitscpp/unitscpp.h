@@ -17,6 +17,8 @@ class Units
         // the user to easily get at the value.
         NT operator()() const { return value; }
 
+        static constexpr int u1 = U1, u2 = U2, u3 = U3, u4 = U4;
+
         // Helper function to get a text representation of the
         // object's dimensions.  It is static because the
         // representation is known at compile time.
